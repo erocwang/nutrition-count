@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  tood: {
+  todo: {
     marginBottom: 15
   },
   input: {
