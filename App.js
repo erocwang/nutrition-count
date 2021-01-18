@@ -15,7 +15,7 @@ const initialState = {name: '', description: ''}
 function App() {
   const [text1, setText1] = useState(''); 
   const [text2, setText2] = useState(''); 
-  const [formState, setFormsState] = useState(initialState)
+  const [formState, setFormState] = useState(initialState)
   const [todos, setTodos] = useState([])
 
   useEffect(() => {
@@ -23,7 +23,7 @@ function App() {
   }, [])
 
   function setInput(key,value) {
-    setFormsState({...formState, [key]:value})
+    setFormState({...formState, [key]:value})
   }
 
   async function fetchTodos() {
@@ -38,7 +38,7 @@ function App() {
     try {
       const todo = { ...formState }
       setTodos([...todos, todo])
-      setFormsState(initialState)
+      setFormState(initialState)
       await API.graphql(graphqlOperation(createTodo, {input: todo}))
     } catch (err) {
       console.log('error creating todo:', err)
