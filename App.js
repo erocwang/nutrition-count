@@ -12,7 +12,7 @@ Amplify.configure(awsconfig);
 
 const initialState = {name: '', description: ''}
 
-function App()  {
+function App() {
   const [text1, setText1] = useState(''); 
   const [text2, setText2] = useState(''); 
   const [formState, setFormsState] = useState(initialState)
@@ -38,7 +38,7 @@ function App()  {
     try {
       const todo = { ...formState }
       setTodos([...todos, todo])
-      setFormState(initialState)
+      setFormsState(initialState)
       await API.graphql(graphqlOperation(createTodo, {input: todo}))
     } catch (err) {
       console.log('error creating todo:', err)
