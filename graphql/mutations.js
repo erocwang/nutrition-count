@@ -1,43 +1,49 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createTodo = /* GraphQL */ `
-  mutation CreateTodo(
-    $input: CreateTodoInput!
-    $condition: ModelTodoConditionInput
+export const createUserInfo = /* GraphQL */ `
+  mutation CreateUserInfo(
+    $input: CreateUserInfoInput!
+    $condition: ModelUserInfoConditionInput
   ) {
-    createTodo(input: $input, condition: $condition) {
+    createUserInfo(input: $input, condition: $condition) {
       id
-      name
-      description
+      calories
+      carbs
+      proteins
+      fats
       createdAt
       updatedAt
     }
   }
 `;
-export const updateTodo = /* GraphQL */ `
-  mutation UpdateTodo(
-    $input: UpdateTodoInput!
-    $condition: ModelTodoConditionInput
+export const updateUserInfo = /* GraphQL */ `
+  mutation UpdateUserInfo(
+    $input: UpdateUserInfoInput!
+    $condition: ModelUserInfoConditionInput
   ) {
-    updateTodo(input: $input, condition: $condition) {
+    updateUserInfo(input: $input, condition: $condition) {
       id
-      name
-      description
+      calories
+      carbs
+      proteins
+      fats
       createdAt
       updatedAt
     }
   }
 `;
-export const deleteTodo = /* GraphQL */ `
-  mutation DeleteTodo(
-    $input: DeleteTodoInput!
-    $condition: ModelTodoConditionInput
+export const deleteUserInfo = /* GraphQL */ `
+  mutation DeleteUserInfo(
+    $input: DeleteUserInfoInput!
+    $condition: ModelUserInfoConditionInput
   ) {
-    deleteTodo(input: $input, condition: $condition) {
+    deleteUserInfo(input: $input, condition: $condition) {
       id
-      name
-      description
+      calories
+      carbs
+      proteins
+      fats
       createdAt
       updatedAt
     }

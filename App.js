@@ -5,43 +5,48 @@ import Amplify, {Auth} from 'aws-amplify';
 import {API, graphqlOperation} from 'aws-amplify'
 import awsconfig from './aws-exports'; 
 import {withAuthenticator} from 'aws-amplify-react-native';
-import {createTodo} from './graphql/mutations'
-import {listTodos} from './graphql/queries'
+import {createUserInfo, updateUserInfo} from './graphql/mutations'
+import {listUserInfos} from './graphql/queries'
 
 Amplify.configure(awsconfig); 
 
-const initialState = {name: '', description: ''}
+const initialState = {calories: '', carbs: '', proteins: '', fats: ''}
 
 function App() {
-  const [text1, setText1] = useState(''); 
-  const [text2, setText2] = useState(''); 
   const [formState, setFormState] = useState(initialState)
-  const [todos, setTodos] = useState([])
+  const [userInfo, setUserInfo] = useState([])
 
   useEffect(() => {
-    fetchTodos()
+    fetchUserInfo()
   }, [])
 
   function setInput(key,value) {
     setFormState({...formState, [key]:value})
   }
 
-  async function fetchTodos() {
+  async function fetchUserInfo() {
     try {
-      const todoData = await API.graphql(graphqlOperation(listTodos))
-      const todos = todoData.data.listTodos.items
-      setTodos(todos)
-    } catch (err) { console.log('error fetching todos') }
+      const userInfoData = await API.graphql(graphqlOperation(listUserInfos))
+      var userInfoTemp = userInfoData.data.listUserInfos.items
+      if(userInfoTemp.length==0) {
+        const userInfo = {...formState}
+        await API.graphql(graphqlOperation(createUserInfo, {input: userInfo}))
+      }
+      else {
+        const userInfo = userInfoTemp[0];
+        setUserInfo(userInfo)
+      }
+    } catch (err) { console.log('error fetching userInfo') }
   }
 
-  async function addTodo() {
+  async function changeUserInfo() {
     try {
-      const todo = { ...formState }
-      setTodos([...todos, todo])
-      setFormState(initialState)
-      await API.graphql(graphqlOperation(createTodo, {input: todo}))
+      var id = userInfo.id 
+      var temp = {id,...formState}
+      setUserInfo(temp) 
+      await API.graphql(graphqlOperation(updateUserInfo, {input: temp}))
     } catch (err) {
-      console.log('error creating todo:', err)
+      console.log('error updating userInfo:', err)
     }
   }
 
@@ -52,51 +57,45 @@ function App() {
       console.log('Error signing out: ', error);
     }
   }
+
   return (
     <View style={styles.container}>
       <TextInput
-        onChangeText={val => setInput('name', val)}
+        onChangeText={val => setInput('calories', val)}
+        keyboardType = 'numeric'
         style={styles.input}
-        value={formState.name}
-        placeholder="Name"
+        value={formState.calories}
+        placeholder="Calories"
       />
       <TextInput
-        onChangeText={val => setInput('description', val)}
+        onChangeText={val => setInput('carbs', val)}
+        keyboardType = 'numeric'
         style={styles.input}
-        value={formState.description}
-        placeholder="Description"
+        value={formState.carbs}
+        placeholder="Carbs"
       />
-      <Button title="Create Todo" onPress={addTodo} />
-      {
-        todos.map((todo, index) => (
-          <View key={todo.id ? todo.id : index} style={styles.todo}>
-            <Text style={styles.todoName}>{todo.name}</Text>
-            <Text>{todo.description}</Text>
-          </View>
-        ))
-      }
-      <Text>Balories</Text>
-      <StatusBar style="auto" />
       <TextInput
-        style={{height: 40}}
-        placeholder="Type here to translate!"
-        onChangeText={text1 => setText1(text1)}
-        defaultValue={text1}
+        onChangeText={val => setInput('proteins', val)}
+        keyboardType = 'numeric'
+        style={styles.input}
+        value={formState.proteins}
+        placeholder="Proteins"
       />
-      <Text style={{padding: 10, fontSize: 42}}>
-        {text1.split(' ').map((word) => word && 'FUCKBORT').join(' ')}
-      </Text>
-      <Text>Fats</Text> 
       <TextInput
-        style={{height: 40}}
-        placeholder="Type here to translate!"
-        onChangeText={text2 => setText2(text2)}
-        defaultValue={text2}
+        onChangeText={val => setInput('fats', val)}
+        keyboardType = 'numeric'
+        style={styles.input}
+        value={formState.fats}
+        placeholder="Fats"
       />
-      <Text style={{padding: 10, fontSize: 42}}>
-        {text2.split(' ').map((word) => word && 'FUCKBORT').join(' ')}
-      </Text>
-      <Text>💙 + 💛 = React Native + Amplify </Text>
+      
+      <Button title="Update Macros" onPress={changeUserInfo} />
+        <View style={styles.todo}>
+          <Text>Calories: {userInfo.calories}</Text>
+          <Text>Carbs: {userInfo.carbs}</Text>
+          <Text>Proteins: {userInfo.proteins}</Text>
+          <Text>Fats: {userInfo.fats}</Text>
+        </View>
       <Button title="Sign Out" color="tomato" onPress={signOut} />
     </View>
   );

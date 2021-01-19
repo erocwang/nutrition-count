@@ -1,5 +1,7 @@
-type Todo @model {
+type UserInfo @model {
   id: ID!
-  name: String!
-  description: String
+  calories: String
+  carbs: String
+  proteins: String 
+  fats: String
 }

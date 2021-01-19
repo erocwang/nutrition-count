@@ -1,34 +1,40 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateTodo = /* GraphQL */ `
-  subscription OnCreateTodo {
-    onCreateTodo {
+export const onCreateUserInfo = /* GraphQL */ `
+  subscription OnCreateUserInfo {
+    onCreateUserInfo {
       id
-      name
-      description
+      calories
+      carbs
+      proteins
+      fats
       createdAt
       updatedAt
     }
   }
 `;
-export const onUpdateTodo = /* GraphQL */ `
-  subscription OnUpdateTodo {
-    onUpdateTodo {
+export const onUpdateUserInfo = /* GraphQL */ `
+  subscription OnUpdateUserInfo {
+    onUpdateUserInfo {
       id
-      name
-      description
+      calories
+      carbs
+      proteins
+      fats
       createdAt
       updatedAt
     }
   }
 `;
-export const onDeleteTodo = /* GraphQL */ `
-  subscription OnDeleteTodo {
-    onDeleteTodo {
+export const onDeleteUserInfo = /* GraphQL */ `
+  subscription OnDeleteUserInfo {
+    onDeleteUserInfo {
       id
-      name
-      description
+      calories
+      carbs
+      proteins
+      fats
       createdAt
       updatedAt
     }
